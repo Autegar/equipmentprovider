@@ -88,35 +88,27 @@ abstract class AbstractCommand implements CommandInterface
         switch ($param) {
             case 'string':
                 return true;
-                break;
 
             case 'float':
                 return true;
-                break;
 
             case 'double':
                 return true;
-                break;
 
             case 'int':
                 return true;
-                break;
 
             case 'boolean':
                 return true;
-                break;
 
             case 'integer':
                 return true;
-                break;
 
             case 'long':
                 return true;
-                break;
 
             default:
                 return false;
-                break;
         }
     }
 
