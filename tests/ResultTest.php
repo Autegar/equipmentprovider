@@ -17,6 +17,9 @@ class ResultTest extends \PHPUnit_Framework_TestCase
      */
     protected $result = null;
 
+    /**
+     * Set up the result object
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -25,17 +28,17 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
     public function testIsValid()
     {
-        $this->assertTrue($this->result->isValid(), "Result is not valid");
+        $this->assertTrue($this->result->isValid(), 'Result is not valid');
     }
     
     public function testCorrectMessage()
     {
-        $this->assertEquals($this->result->getMessage(), "Result message ist bad");
+        $this->assertEquals('Its me', $this->result->getMessage(), 'Result message ist bad');
     }
     
     public function testCorrectMessageType()
     {
-        $this->assertEquals(Result::SUCCESS_MESSAGE, $this->result->getMessageType());
+        $this->assertEquals(1, Result::SUCCESS_MESSAGE, $this->result->getMessageType());
     }
     
     public function testData()
@@ -43,12 +46,12 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $data = $this->result->getData();
         
         $this->assertTrue(is_array($data));
-        $this->assertEquals("Its me", "Result Message is not correct");
+        $this->assertEquals('Test', $data[0], 'Result Message is not correct');
     }
 
     public function testResultObject()
     {
         $result = Result::getResult('Its me', Result::SUCCESS_MESSAGE, array('Test'), true);
-        $this->assertTrue($result instanceof Result, "Result ist not a result object from equipment");
+        $this->assertTrue($result instanceof Result, 'Result ist not a result object from equipment');
     }
 }

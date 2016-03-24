@@ -4,7 +4,7 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         printerFile="vendor/zf2timo/phpunit-pretty-result-printer/src/Printer.php"
+         printerFile="..//phpunit-pretty-result-printer/src/Printer.php"
          printerClass="PrettyResultPrinter\Printer"
          processIsolation="false"
          stopOnFailure="false"
@@ -13,9 +13,6 @@
          <testsuites>
              <testsuite name="Result">
                  <file>tests/ResultTest.php</file>
-             </testsuite>
-             <testsuite name="Command">
-                 <file>tests/Service/AbstractCommandTest.php</file>
              </testsuite>
          </testsuites>
 </phpunit>
