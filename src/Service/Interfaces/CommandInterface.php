@@ -4,7 +4,7 @@
  * Contains an interface for commands
  */
 
-namespace Christianparadies\Equipment\Application\Service\Interfaces;
+namespace Christianparadies\Equipment\Service\Interfaces;
 
 use Christianparadies\Equipment\Result;
 

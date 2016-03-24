@@ -17,5 +17,8 @@
              <testsuite name="Command">
                  <file>tests/Service/AbstractCommandTest.php</file>
              </testsuite>
+             <testsuite>
+                 <directory>tests/Model/Value</directory>
+             </testsuite>
          </testsuites>
 </phpunit>
