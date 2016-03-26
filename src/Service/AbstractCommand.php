@@ -9,7 +9,8 @@
 
 namespace Christianparadies\Equipment\Service;
 
-use Christianparadies\Equipment\Application\Service\Interfaces\CommandInterface;
+
+use Christianparadies\Equipment\Service\Interfaces\CommandInterface;
 use Christianparadies\Equipment\Exception\EquipmentException;
 
 /**
@@ -70,10 +71,13 @@ abstract class AbstractCommand implements CommandInterface
 
         if ($this->isScalarType($lowerCaseParamType)) {
             $method = 'is_' . $lowerCaseParamType;
-            return $method($param);
+
+            $isValid = $method($param);
+            return $isValid;
         }
 
-        return is_a($param, $paramType);
+        $isValid = is_a($param, $paramType);
+        return $isValid;
     }
 
     /**
@@ -88,35 +92,27 @@ abstract class AbstractCommand implements CommandInterface
         switch ($param) {
             case 'string':
                 return true;
-                break;
 
             case 'float':
                 return true;
-                break;
 
             case 'double':
                 return true;
-                break;
 
             case 'int':
                 return true;
-                break;
 
             case 'boolean':
                 return true;
-                break;
 
             case 'integer':
                 return true;
-                break;
 
             case 'long':
                 return true;
-                break;
 
             default:
                 return false;
-                break;
         }
     }
 
@@ -154,7 +150,7 @@ abstract class AbstractCommand implements CommandInterface
         for ($arrayIndex = 0; $arrayIndex < $arrayCount; $arrayIndex++) {
             if (!$this->isValid($params[$arrayIndex], $paramTypes[$arrayIndex])) {
                 $valid = false;
-                $objectErrors[] = [['param'] => $params, ['type'] => $paramTypes, ['caller'] => $caller, ['line'] => $lineNumber];
+                $objectErrors[] = ['param' => $params, 'type' => $paramTypes, 'caller' => $caller, 'line' => $lineNumber];
             }
         }
 

@@ -59,7 +59,7 @@ class Name
      * Set the firstname
      *
      * @param string $name
-     * @return \Equipment\Model\Value\Name
+     * @return Name
      */
     public function setName($name)
     {
@@ -71,7 +71,7 @@ class Name
      * Set the surname
      *
      * @param string $surname
-     * @return \Equipment\Model\Value\Name
+     * @return Name
      */
     public function setSurname($surname)
     {
@@ -87,14 +87,14 @@ class Name
      */
     public function getFullName()
     {
-        if ($this->surname != "" && $this->name != "") {
+        if ($this->surname !== '' && $this->name !== '') {
             $fullName = $this->name . ' ' . $this->surname;
         } else {
-            if ($this->name != "") {
-                $fullname = $this->name;
+            if ($this->name !== '') {
+                $fullName = $this->name;
             }
-            if ($this->surname != "") {
-                $fullname = $this->surname;
+            if ($this->surname !== '') {
+                $fullName = $this->surname;
             }
         }
         

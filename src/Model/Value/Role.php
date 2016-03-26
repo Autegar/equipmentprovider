@@ -20,7 +20,7 @@ class Role
      */
     protected $role;
     
-    public function __construct($role)
+    public function __construct(array $role)
     {
         if (is_null($role)) {
             $role = array();
@@ -28,9 +28,23 @@ class Role
         $this->role = $role;
     }
     
-    public function getRole($role = "")
+    public function getRole($role = '')
     {
+        if ($role !== '') {
+            return $this->getRoleFromArray($role);
+        }
         return $this->role;
+    }
+
+    private function getRoleFromArray($role)
+    {
+        foreach ($this->role as $roleItem) {
+            if ($roleItem === $role) {
+                return $roleItem;
+            }
+        }
+
+        return '';
     }
 
     public function setRole(array $role)
