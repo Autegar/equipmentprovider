@@ -9,10 +9,13 @@
 namespace Christianparadies\Equipment\Tests\Service;
 
 use Christianparadies\Equipment\Exception\EquipmentException;
+use Christianparadies\Equipment\Exception\InvalidNumberOfArgumentsException;
+use Christianparadies\Equipment\Exception\InvalidArgumentException;
 use Christianparadies\Equipment\Service\AbstractCommand;
 use Christianparadies\Equipment\Service\Interfaces\CommandInterface;
+use PHPUnit_Framework_TestCase;
 
-class AbstractCommandTest extends \PHPUnit_Framework_TestCase
+class AbstractCommandTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var AbstractCommand
@@ -81,5 +84,20 @@ class AbstractCommandTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(EquipmentException::class, 'Could not validate params as array because array count from params and paramtypes differs');
         $this->stubAbstractCommand->validateArrayParams($parameters, $exceptionTypes);
 
+    }
+    
+    public function testCheckNumberOfParameters()
+    {
+        $this->setExpectedException(InvalidNumberOfArgumentsException::class, 'This command expect at least 3 parameters. 4 given!');
+        $this->stubAbstractCommand->checkNumberOfArguments(4, 3);
+    }
+    
+    public function testCheckParameters()
+    {
+        $params = ['tester', 10.00];
+        $types  = ['integer', 'float'];
+        
+        $this->setExpectedException(InvalidArgumentException::class, 'Parameters are not valid.');
+        $this->stubAbstractCommand->checkParameters($params, $types);
     }
 }
