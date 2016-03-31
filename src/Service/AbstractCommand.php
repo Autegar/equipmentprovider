@@ -103,7 +103,7 @@ abstract class AbstractCommand implements CommandInterface
             case 'int':
                 return true;
 
-            case 'boolean':
+            case 'bool':
                 return true;
 
             case 'integer':
