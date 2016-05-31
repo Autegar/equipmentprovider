@@ -3,7 +3,7 @@
 /**
  * Includes a class representing a salt value object
  */
-namespace Equipment\Model\Value;
+namespace Christianparadies\Equipment\Model\Value;
 
 /**
  * This value object helps to manage the salt for crypting.
