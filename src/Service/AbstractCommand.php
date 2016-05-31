@@ -207,7 +207,7 @@ abstract class AbstractCommand implements CommandInterface
         if (is_array($result)) {
             $reason = '';
             foreach ($result as $problem) {
-                $reason .= $problem . PHP_EOL
+                $reason .= $problem . PHP_EOL;
             }
             throw new InvalidArgumentException(
                 'Parameters are not valid. Reason : ' . $reason
