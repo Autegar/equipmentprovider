@@ -9,9 +9,10 @@
 
 namespace Christianparadies\Equipment\Service;
 
-
-use Christianparadies\Equipment\Service\Interfaces\CommandInterface;
 use Christianparadies\Equipment\Exception\EquipmentException;
+use Christianparadies\Equipment\Exception\InvalidArgumentException;
+use Christianparadies\Equipment\Exception\InvalidNumberOfArgumentsException;
+use Christianparadies\Equipment\Service\Interfaces\CommandInterface;
 
 /**
  * Provides a basic method to validate the params
@@ -48,7 +49,7 @@ abstract class AbstractCommand implements CommandInterface
      * @param string $caller
      * @param int $linenumber
      * @return mixed
-     * @throws \Christianparadies\Equipment\Exception\EquipmentException
+     * @throws EquipmentException
      */
     public function validateArrayParams(array $param, array $paramTypes, $caller = "", $linenumber = 0)
     {
@@ -74,6 +75,10 @@ abstract class AbstractCommand implements CommandInterface
 
             $isValid = $method($param);
             return $isValid;
+        }
+
+        if ($lowerCaseParamType === 'array') {
+            return is_array($param);
         }
 
         $isValid = is_a($param, $paramType);
@@ -102,7 +107,7 @@ abstract class AbstractCommand implements CommandInterface
             case 'int':
                 return true;
 
-            case 'boolean':
+            case 'bool':
                 return true;
 
             case 'integer':
@@ -132,7 +137,7 @@ abstract class AbstractCommand implements CommandInterface
      * @param string $caller
      * @param int $lineNumber
      * @return array|bool true if no error appears and array if errors are available.
-     * @throws \Christianparadies\Equipment\Exception\EquipmentException
+     * @throws EquipmentException
      */
     private function validateArray(array $params, array $paramTypes, $caller, $lineNumber)
     {
@@ -159,5 +164,54 @@ abstract class AbstractCommand implements CommandInterface
         }
 
         return $objectErrors;
+    }
+    
+    /**
+     * Checks the parametercount
+     *
+     * If parameter count is greater than 2 InvalidNumberOfArgumentsExepction will be thrown.
+     * @param integer $numberOfArguments
+     * @param integer $expected
+     * @throws \Celexon\FileService\Exception\InvalidNumberOfArgumentsException
+     */
+    public function checkNumberOfArguments($numberOfArguments, $expected)
+    {
+        if ($numberOfArguments !== $expected) {
+            throw new InvalidNumberOfArgumentsException(
+                'This command expect at least ' . $expected . ' parameters. ' . $numberOfArguments . ' given!'
+            );
+        }
+    }
+
+    /**
+     * Validate the given parameters
+     *
+     * If parameters or one of it is not valid, an InvalidArgumentException will be thrown. This given parameters
+     * have to be a string.
+     * @param array $parameters
+     * @throws \Celexon\FileService\Exception\InvalidArgumentException
+     * @throws \Christianparadies\Equipment\Exception\InvalidArgumentException
+     */
+    public function checkParameters(array $parameters, array $parameterTypes)
+    {
+        try {
+            $result = $this->validateArrayParams($parameters, $parameterTypes);
+        } catch (EquipmentException $equipmentException) {
+            throw new InvalidArgumentException(
+                'Parameters are marked as not valid. Reason is a leading exception',
+                $equipmentException->getCode(),
+                $equipmentException
+            );
+        }
+
+        if (is_array($result)) {
+            $reason = '';
+            foreach ($result as $problem) {
+                $reason .= $problem . PHP_EOL
+            }
+            throw new InvalidArgumentException(
+                'Parameters are not valid. Reason : ' . $reason
+            );
+        }
     }
 }
