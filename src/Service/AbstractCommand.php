@@ -77,6 +77,10 @@ abstract class AbstractCommand implements CommandInterface
             return $isValid;
         }
 
+        if ($lowerCaseParamType === 'array') {
+            return is_array($param);
+        }
+
         $isValid = is_a($param, $paramType);
         return $isValid;
     }
@@ -178,14 +182,15 @@ abstract class AbstractCommand implements CommandInterface
             );
         }
     }
-    
-   /**
+
+    /**
      * Validate the given parameters
      *
      * If parameters or one of it is not valid, an InvalidArgumentException will be thrown. This given parameters
      * have to be a string.
      * @param array $parameters
      * @throws \Celexon\FileService\Exception\InvalidArgumentException
+     * @throws \Christianparadies\Equipment\Exception\InvalidArgumentException
      */
     public function checkParameters(array $parameters, array $parameterTypes)
     {
@@ -200,8 +205,12 @@ abstract class AbstractCommand implements CommandInterface
         }
 
         if (is_array($result)) {
+            $reason = '';
+            foreach ($result as $problem) {
+                $reason .= $problem . PHP_EOL
+            }
             throw new InvalidArgumentException(
-                'Parameters are not valid.'
+                'Parameters are not valid. Reason : ' . $reason
             );
         }
     }
