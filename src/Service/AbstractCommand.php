@@ -207,11 +207,32 @@ abstract class AbstractCommand implements CommandInterface
         if (is_array($result)) {
             $reason = '';
             foreach ($result as $problem) {
-                $reason .= $problem . PHP_EOL;
+                $reason .= $this->getFormattedErrorLine($problem);
             }
+
             throw new InvalidArgumentException(
                 'Parameters are not valid. Reason : ' . $reason
             );
         }
+    }
+
+    /**
+     * Format the error line for printing.
+     *
+     * @param array $problem
+     * @return string
+     */
+    private function getFormattedErrorLine(array $problem)
+    {
+        $formattedErrorLine = '';
+
+        $paramCount = count($problem['param']);
+
+        for ($i = 0; $i < $paramCount; $i++) {
+            $formattedErrorLine .= $problem['param'][$i] . ' => ' . $problem['type'][$i] . PHP_EOL;
+        }
+
+
+        return $formattedErrorLine;
     }
 }
