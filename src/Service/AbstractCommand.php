@@ -224,14 +224,7 @@ abstract class AbstractCommand implements CommandInterface
      */
     private function getFormattedErrorLine(array $problem)
     {
-        $formattedErrorLine = '';
-
-        $paramCount = count($problem['param']);
-
-        for ($i = 0; $i < $paramCount; $i++) {
-            $formattedErrorLine .= $problem['param'][$i] . ' => ' . $problem['type'][$i] . PHP_EOL;
-        }
-
+        $formattedErrorLine = print_r($problem, true);
 
         return $formattedErrorLine;
     }
