@@ -125,7 +125,7 @@ class Result
      *
      * To set the message type use the constants of this class like
      * Result::ERROR_MESSAGE
-     * @param type $messageType
+     * @param int $messageType
      */
     public function setMessageType($messageType)
     {
@@ -140,6 +140,31 @@ class Result
     public function setData($data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * Convert object to json
+     *
+     * @return string
+     */
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * Convert result object to array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $result['result']['message'] = $this->getMessage();
+        $result['result']['messageType'] = $this->getMessageType();
+        $result['result']['data'] = $this->getData();
+        $result['result']['valid'] = $this->isValid();
+
+        return $result;
     }
 
     /**
