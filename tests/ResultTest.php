@@ -54,4 +54,23 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $result = Result::getResult('Its me', Result::SUCCESS_MESSAGE, array('Test'), true);
         $this->assertTrue($result instanceof Result, 'Result ist not a result object from equipment');
     }
+
+    public function testValidJson()
+    {
+        $result = Result::getResult('Its me', Result::SUCCESS_MESSAGE, array('Test'), true);
+        $jsonCode = $result->toJson();
+
+        $this->assertNotNull($jsonCode, 'Json code should not be null');
+    }
+
+    public function testArray()
+    {
+        $result = Result::getResult('Its me', Result::SUCCESS_MESSAGE, array('Test'), true);
+
+        $resultArray = $result->toArray();
+
+        $this->assertTrue(is_array($resultArray), 'Result is no array');
+        $this->assertEquals('Its me', $resultArray['result']['message'], 'Bad message returned');
+        $this->assertEquals(Result::SUCCESS_MESSAGE, $resultArray['result']['messageType'], 'Bad messageType returned');
+    }
 }
