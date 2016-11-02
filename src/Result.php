@@ -37,27 +37,27 @@ class Result
     protected $data;
 
     /**
-     * @var const default message
+     * @var int default message
      */
     const DEFAULT_MESSAGE = 0;
 
     /**
-     * @var const success message
+     * @var int success message
      */
     const SUCCESS_MESSAGE = 1;
 
     /**
-     * @var const info message
+     * @var int info message
      */
     const INFO_MESSAGE = 2;
 
     /**
-     * @var const warning message
+     * @var int warning message
      */
     const WARNING_MESSAGE = 3;
 
     /**
-     * @var const error message
+     * @var int error message
      */
     const ERROR_MESSAGE = 4;
 
